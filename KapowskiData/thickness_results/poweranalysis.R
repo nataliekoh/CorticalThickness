@@ -1,6 +1,7 @@
 # Power analysis for cortical thickness pipelines ANTs vs FreeSurfer
 
 library(pwr)
+library(grid); library(gridExtra)
 
 a.resultsIXI <- read.csv('ANTSlabelresultsI.csv')
 a.resultsKirby <- read.csv('ANTSlabelresultsK.csv')
@@ -49,5 +50,22 @@ l.entorhinal.pwr <- pwr.t.test(d=l.entorhinal[1,7], sig.level=0.05, power=0.90, 
 l.superiorfrontal.pwr <- pwr.t.test(d=l.superiorfrontal[1,7], sig.level=0.05, power=0.90, type="paired", alternative="greater")
 r.entorhinal.pwr <- pwr.t.test(d=r.entorhinal[1,7], sig.level=0.05, power=0.90, type="paired", alternative="greater")
 r.superiorfrontal.pwr <- pwr.t.test(d=r.superiorfrontal[1,7], sig.level=0.05, power=0.90, type="paired", alternative="greater")
+
+# create a dataframe to show effect sizes, n and power for each labeled region
+all.power <- c()
+for (i in 1:length(regions)){
+  power <- pwr.t.test(d=af.average[regions[i],][1,7], sig.level=0.05, power=0.90, type="paired", alternative="two.sided")
+  all.power <- rbind(all.power, power)
+}
+rownames(all.power) <- regions
+
+# create pdf for the power dataframe
+#pdf("poweranalysis.pdf", height=11, width=8.5)
+#  grid.newpage()
+#grid.draw(tableGrob(all.power))
+#dev.off()
+
+
+
 
 
