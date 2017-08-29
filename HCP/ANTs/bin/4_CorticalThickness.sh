@@ -1,11 +1,11 @@
 #! /bin/bash
 
-for i in 101915; do
+for i in `cat ../../HCPsubjectids`; do
     antsCorticalThickness.sh -d 3 \
-			     -a ${i}_T1.nii.gz \
-			     -e T_template0.nii.gz \
-			     -m ../NKI/HCP_BrainExtractionMask.nii.gz \
-			     -p priors/cortthickprior%d.nii.gz \
+			     -a ../../batch/${i}_3T_T1w_MPR1.nii.gz \
+			     -e MVC_CC_Template/T_template0.nii.gz \
+			     -m ../HCP_BrainExtractionMask.nii.gz \
+			     -p ../cortthickprior%d.nii.gz \
 			     -o ${i}_
 done
 
